@@ -3,7 +3,7 @@
 https://github.com/Jerga99/personal-app
 
 ## My Git
-
+https://github.com/samedan/22.11_nextjs_personal_app
 
 ## Original Tutorial 
 https://www.udemy.com/course/next-js-with-react-build-personal-app-blogs-portfolios
