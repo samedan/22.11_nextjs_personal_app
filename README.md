@@ -1,3 +1,13 @@
+
+## Original Git
+https://github.com/Jerga99/personal-app
+
+## My Git
+
+
+## Original Tutorial 
+https://www.udemy.com/course/next-js-with-react-build-personal-app-blogs-portfolios
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
