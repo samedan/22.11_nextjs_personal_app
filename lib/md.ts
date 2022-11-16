@@ -1,8 +1,10 @@
 import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
-import { MarkdownItem } from "./../interfaces/Markdown";
-import { Blog } from "../interfaces/Blog";
+import { MarkdownItem } from "@interfaces/Markdown";
+import { remark } from "remark";
+import html from "remark-html";
+import remarkGfm from "remark-gfm";
 
 // cwd = current WorkingDirectory = 'C:\\apps\\neXt_js\\22.11_filip_personal-app\\pset'
 const getDir = (path: string) => join(process.cwd(), path);
@@ -26,4 +28,9 @@ const getAllItems = (
   return items;
 };
 
-export { getDir, getFileNames, getItemInPath, getAllItems };
+const markdownToHtml = async (markdown: string) => {
+  const result = await remark().use(html).use(remarkGfm).process(markdown);
+  return result.toString();
+};
+
+export { getDir, getFileNames, getItemInPath, getAllItems, markdownToHtml };
