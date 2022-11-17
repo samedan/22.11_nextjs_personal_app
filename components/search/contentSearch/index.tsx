@@ -1,27 +1,60 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import contentIndexer from "@lib/client/ContentIndexer";
 import { SearchContent } from "@interfaces/Markdown";
 
 const ContentSearch = () => {
+  const ref = useRef<HTMLInputElement>(null);
   const [results, setResults] = useState<SearchContent[]>([]);
+  const [query, setQuery] = useState("");
 
   const handleClickOutside = () => {
-    alert("click ourside");
+    // delete the displayed results
+    setResults([]);
+    // reset the search query to ""
+    setQuery("");
   };
 
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
+    // if we have results trigger click event
+    const callback = (event: MouseEvent) => {
+      // debugger;
+      // chek to see if click inside the input
+      if (
+        results.length > 0 &&
+        ref.current && // input search
+        // click anywhere else BUT the input
+        !ref.current.contains(event.target as Node)
+      ) {
+        console.log(event.target);
+        handleClickOutside();
+      }
+    };
+
+    const escapeKeyCallback = (event: KeyboardEvent) => {
+      if (
+        event.key === "Escape"
+        // && results.length > 0
+      ) {
+        handleClickOutside();
+      }
+    };
+
+    document.addEventListener("click", callback);
+    document.addEventListener("keydown", escapeKeyCallback);
+
     // clean up = unsubscribe
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("click", callback);
+      document.removeEventListener("keydown", escapeKeyCallback);
     };
-  }, []);
+  }, [results.length]);
 
   const performSearch = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     const results = contentIndexer.search(value);
     setResults(results);
+    setQuery(value);
   };
 
   return (
@@ -37,6 +70,8 @@ const ContentSearch = () => {
           />
         </div>
         <input
+          ref={ref}
+          value={query}
           onChange={performSearch}
           id="search-input"
           autoComplete="off"
