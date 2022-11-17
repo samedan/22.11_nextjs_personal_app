@@ -6,12 +6,16 @@ import { PortfolioList } from "@components/portfolios";
 import BaseLayout from "@components/layouts/base";
 import { getBlogs } from "@lib/blogs";
 import { Blog } from "@interfaces/Blog";
+import { saveSearchData } from "@lib/md";
+import { getPortfolios } from "@lib/portfolios";
+import { Portfolio } from "@interfaces/Portfolio";
 
 type Props = {
   blogs: Blog[];
+  portfolios: Portfolio[];
 };
 
-const Home: NextPage<Props> = ({ blogs }) => {
+const Home: NextPage<Props> = ({ blogs, portfolios }) => {
   return (
     <BaseLayout>
       <h2 className="text-2xl font-bold tracking-tight text-gray-900">
@@ -35,7 +39,7 @@ const Home: NextPage<Props> = ({ blogs }) => {
       </h2>
 
       {/* Portfolio List Starts */}
-      <PortfolioList />
+      <PortfolioList portfolios={portfolios} />
       {/* Portfolio List Ends */}
     </BaseLayout>
   );
@@ -43,8 +47,10 @@ const Home: NextPage<Props> = ({ blogs }) => {
 
 export const getStaticProps: GetStaticProps = () => {
   const blogs = getBlogs();
+  const portfolios = getPortfolios();
 
-  return { props: { blogs } };
+  saveSearchData(blogs);
+  return { props: { blogs, portfolios } };
 };
 
 export default Home;

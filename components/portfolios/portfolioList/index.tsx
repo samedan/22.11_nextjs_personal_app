@@ -1,24 +1,19 @@
-import { PortfolioItem } from "./PortfolioItem"
+import { PortfolioItem } from "./PortfolioItem";
+import { Portfolio } from "./../../../interfaces/Portfolio";
+import { FunctionComponent } from "react";
 
+type Props = {
+  portfolios: Portfolio[];
+};
 
-const portfolios = [
-    {
-      slug: "software-engineer-siemens",
-      title: "Software Engineer Siemens",
-      description: "Working as C++ and C# software engineer",
-      employmentDate: "2022-01-12",
-      coverImage: "https://images.unsplash.com/photo-1622473590773-f588134b6ce7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1370&q=50",
-    },
-  ]
+const PortfolioList: FunctionComponent<Props> = ({ portfolios }) => {
+  return (
+    <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+      {portfolios.map((portfolio) => (
+        <PortfolioItem portfolio={portfolio} key={portfolio.slug} />
+      ))}
+    </div>
+  );
+};
 
-const PortfolioList = () => {
-    return (
-        <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-        {portfolios.map((portfolio) => (
-         <PortfolioItem portfolio={portfolio} key={portfolio.slug}/>
-        ))}
-      </div>
-    )
-}
-
-export default PortfolioList
+export default PortfolioList;
