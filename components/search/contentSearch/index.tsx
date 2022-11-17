@@ -1,19 +1,28 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import contentIndexer from "@lib/client/ContentIndexer";
+import { SearchContent } from "@interfaces/Markdown";
 
 const ContentSearch = () => {
-  const buildIndex = () => {
-    const results1 = contentIndexer.search("nft marketplace");
-    const results2 = contentIndexer.search("practical");
-    const results3 = contentIndexer.search("mark");
-    const results4 = contentIndexer.search("siemens");
-    const results5 = contentIndexer.search("xxxxx");
+  const [results, setResults] = useState<SearchContent[]>([]);
+
+  const handleClickOutside = () => {
+    alert("click ourside");
   };
 
   useEffect(() => {
-    buildIndex();
+    document.addEventListener("click", handleClickOutside);
+    // clean up = unsubscribe
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, []);
+
+  const performSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    const results = contentIndexer.search(value);
+    setResults(results);
+  };
 
   return (
     <>
@@ -28,6 +37,7 @@ const ContentSearch = () => {
           />
         </div>
         <input
+          onChange={performSearch}
           id="search-input"
           autoComplete="off"
           type="text"
@@ -35,31 +45,25 @@ const ContentSearch = () => {
           placeholder="Search for anything"
         />
       </div>
-      {false && (
+      {results.length > 0 && (
         <ul
           className="w-80 border-solid border rounded-md z-10 bg-white max-h-80 overflow-auto absolute select is-multiple"
           role="listbox"
         >
-          <li
-            onClick={() => {}}
-            className={`hover:bg-indigo-600 hover:text-white p-3 relative cursor-pointer`}
-          >
-            <div className="font-bold text-sm truncate">Found Blog Title 1</div>
-            <p className="truncate text-sm">Found Blog Desc 1</p>
-            <span className="mt-2 text-xs text-white bg-gray-800 px-2 py-1 rounded-xl">
-              blogs
-            </span>
-          </li>
-          <li
-            onClick={() => {}}
-            className={`hover:bg-indigo-600 hover:text-white p-3 relative cursor-pointer`}
-          >
-            <div className="font-bold text-sm truncate">Found Blog Title 2</div>
-            <p className="truncate text-sm">Found Blog Desc 2</p>
-            <span className="mt-2 text-xs text-white bg-gray-800 px-2 py-1 rounded-xl">
-              portfolios
-            </span>
-          </li>
+          {" "}
+          {results.map((result) => (
+            <li
+              key={result.slug}
+              onClick={() => {}}
+              className={`hover:bg-indigo-600 hover:text-white p-3 relative cursor-pointer`}
+            >
+              <div className="font-bold text-sm truncate">{result.title}</div>
+              <p className="truncate text-sm">{result.description}</p>
+              <span className="mt-2 text-xs text-white bg-gray-800 px-2 py-1 rounded-xl">
+                {result.category}
+              </span>
+            </li>
+          ))}
         </ul>
       )}
     </>

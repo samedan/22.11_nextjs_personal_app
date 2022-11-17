@@ -1,5 +1,6 @@
 import * as JsSearch from "js-search";
 import searchIndex from "@content/search/index.json";
+import { SearchContent } from "@interfaces/Markdown";
 
 class ContentIndexer {
   private static instance: ContentIndexer;
@@ -22,13 +23,13 @@ class ContentIndexer {
     this.buildIndex();
   }
 
-  public search(query: string) {
+  public search(query: string): SearchContent[] {
     const results = this.searchEngine.search(query);
-    return results;
+    return results as SearchContent[];
   }
 
   private buildIndex() {
-    console.log("Building search index only once");
+    // console.log("Building search index only once");
 
     this.searchEngine = new JsSearch.Search("slug"); // "slug" always is different so used as index
     this.searchEngine.addIndex("title");
