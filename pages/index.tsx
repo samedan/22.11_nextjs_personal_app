@@ -48,8 +48,12 @@ const Home: NextPage<Props> = ({ blogs, portfolios }) => {
 export const getStaticProps: GetStaticProps = () => {
   const blogs = getBlogs();
   const portfolios = getPortfolios();
+  const content = {
+    blogs,
+    portfolios,
+  };
 
-  saveSearchData(blogs);
+  saveSearchData(content);
   return { props: { blogs, portfolios } };
 };
 

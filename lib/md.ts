@@ -1,7 +1,12 @@
 import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
-import { MarkdownItem, SearchContent } from "@interfaces/Markdown";
+import {
+  ContentItemName,
+  MarkdownContent,
+  MarkdownItem,
+  SearchContent,
+} from "@interfaces/Markdown";
 import { remark } from "remark";
 import html from "remark-html";
 import remarkGfm from "remark-gfm";
@@ -34,18 +39,26 @@ const markdownToHtml = async (markdown: string) => {
   return result.toString();
 };
 
-const saveSearchData = (blogs: Blog[]) => {
+const saveSearchData = (content: MarkdownContent) => {
   const searchFile = getDir("/content/search/index.json");
   const searchItemList: SearchContent[] = [];
-
-  blogs.forEach((blog) => {
-    const searchItem = {} as SearchContent;
-    searchItem.slug = blog.slug;
-    searchItem.title = blog.title;
-    searchItem.description = blog.description;
-    searchItem.category = "blogs";
-    searchItemList.push(searchItem);
-  });
+  Object.keys(content) // transforms {}s into []s
+    // const content = {
+    //    blogs: [{b1}, {b2}, ...],
+    //    portfolios: [{p1}, {p2}, ...]
+    // }
+    // Object.keys(content) => ['blogs', 'portfolios']
+    .forEach((dataSource) => {
+      const contentName = dataSource as ContentItemName; // "blogs" or "portfolios" keys
+      content[contentName].forEach((data) => {
+        const searchItem = {} as SearchContent;
+        searchItem.slug = data.slug;
+        searchItem.title = data.title;
+        searchItem.description = data.description;
+        searchItem.category = contentName;
+        searchItemList.push(searchItem);
+      });
+    });
 
   fs.writeFileSync(
     searchFile,
