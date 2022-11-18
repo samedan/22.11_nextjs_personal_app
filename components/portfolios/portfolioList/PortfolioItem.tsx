@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Portfolio } from "@interfaces/Portfolio";
 import { FunctionComponent } from "react";
+import { shortify } from "@lib/client/utils";
 
 type Props = {
   portfolio: Portfolio;
@@ -22,12 +23,12 @@ export const PortfolioItem: FunctionComponent<Props> = ({ portfolio }) => {
         <Link legacyBehavior href={`/portfolios/${portfolio.slug}`}>
           <a>
             <span className="absolute inset-0" />
-            {portfolio.title}
+            {shortify(portfolio.title)}
           </a>
         </Link>
       </h3>
       <p className="text-base font-semibold text-gray-900">
-        {portfolio.description}
+        {shortify(portfolio.description)}
       </p>
     </div>
   );

@@ -4,7 +4,7 @@ description: Learn how to use React / Next JS, Solidity, and Pinata(IPFS) to cre
 author: Filip Jerga
 authorImage: https://thrangra.sirv.com/Ethereum_blue_light-small.jpg
 coverImage: https://thrangra.sirv.com/Ethereum_blue_light-small.jpg
-date: "2022-04-25"
+date: "2022-06-25"
 ---
 
 Next.js gives you the best developer experience with all the features you need for production: hybrid static & server rendering, TypeScript support, smart bundling, route pre-fetching, etc. No config is necessary.
@@ -47,15 +47,14 @@ The last part of the course covers preparing and storing data related to NFT. So
 
 NFT metadata data will be stored on Pinata (IPFS) based storage. Students will learn to gather data from the form and later submit them to the Pinata storage. The following important part is to link this metadata and create an NFT.
 
-
 **The most mentionable topics covered in this application are:**
 
-* Next JS Integration with Web3 and Blockchain
+- Next JS Integration with Web3 and Blockchain
 
-* Reactivity with Hooks and SWR
+- Reactivity with Hooks and SWR
 
-* Creation of NFT(ERC721) Smart Contract
+- Creation of NFT(ERC721) Smart Contract
 
-* NFT data manipulation and storage on Pinata
+- NFT data manipulation and storage on Pinata
 
-* Typescript
+- Typescript
