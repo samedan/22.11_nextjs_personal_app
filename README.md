@@ -1,12 +1,18 @@
-
 ## Original Git
+
 https://github.com/Jerga99/personal-app
 
 ## My Git
+
 https://github.com/samedan/22.11_nextjs_personal_app
 
-## Original Tutorial 
+## Original Tutorial
+
 https://www.udemy.com/course/next-js-with-react-build-personal-app-blogs-portfolios
+
+## Edit/Add Markdown content
+
+https://stackedit.io/app#
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
